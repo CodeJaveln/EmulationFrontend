@@ -1,5 +1,9 @@
+#include "inipp/inipp.h"
 #include "raylib/raylib.h"
+#include <cstddef>
+#include <fstream>
 #include <iostream>
+#include <ostream>
 
 constexpr int SCREEN_WIDTH = 800;
 constexpr int SCREEN_HEIGHT = 450;
@@ -15,8 +19,14 @@ int main(int argc, char *argv[]) {
     // Pass names struct as data to draw interface
     // If pressed or entered logic function will call function to execute that rom
     // Exits at user request
+    
+    inipp::Ini<char> ini;
+    std::ifstream is("systems.ini");
+    ini.parse(is);
+    std::cout << "ini file:" << std::endl;
+    ini.generate(std::cout);
 
-    std::cout << argv[0] << std::endl;
+    return 0;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello, World!");
 
