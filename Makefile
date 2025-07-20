@@ -5,10 +5,10 @@ OBJ := $(SRC:src/%.cpp=build/%.o)
 
 CXX := g++
 CXXFLAGS := -Wall -Werror -Iinclude -std=c++23 -MMD -MP
-LDFLAGS := -Llibraries -lraylib 
+LDFLAGS := -Llibraries -lraylib
 
 $(TARGET): $(OBJ)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	$(CXX) $^ $(LDFLAGS) -o $@ 
 
 build/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
