@@ -23,6 +23,20 @@ struct SystemProfile {
     Executable emulator;
 };
 
+struct RomProfile {
+    // Valid path to pass in system.emulator.run
+    std::string rom_path;
+
+    // Taken from system.rom_dir somewhere
+    std::string rom_dir_path;
+    // To default to for displaying
+    std::string dir_name;
+
+    const SystemProfile& system;
+
+    RomProfile(const SystemProfile& sys) : system(sys) {}
+};
+
 
 } // namespace emufront
 

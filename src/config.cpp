@@ -1,5 +1,8 @@
 #include "config.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <filesystem>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -55,6 +58,38 @@ std::optional<std::vector<SystemProfile>> parse_systems(std::string ini_path) {
     }
 
     return systems;
+}
+
+
+std::vector<RomProfile> read_roms(const std::vector<SystemProfile>& systems) {
+    std::vector<RomProfile> rom_profiles;
+
+    for (size_t i = 0; i < systems.size(); i++) {
+        for (const auto& entry : std::filesystem::directory_iterator(systems[i].rom_dir)) {
+            if (!entry.is_directory()) {
+                continue;
+            }
+
+            RomProfile rom(systems[i]);
+            auto entry_dir = std::filesystem::absolute(std::filesystem::path(systems[i].rom_dir) / entry.path().filename());
+
+            rom.rom_dir_path = entry_dir.string();
+            rom.dir_name = entry.path().filename();
+
+            if (!
+            for (const auto& rom_dir_entry : std::filesystem::directory_iterator(rom.rom_dir_path)) {
+                if (!rom_dir_entry.is_directory() && std::find(systems[i].valid_rom_extensions.begin(), systems[i].valid_rom_extensions.end(), rom_dir_entry.path().extension()) != systems[i].valid_rom_extensions.end()) {
+                    rom.rom_path = std::filesystem::absolute(std::filesystem::path(entry_dir) / rom_dir_entry.path().filename()).string();
+                    break;
+                }
+            }
+
+
+            rom_profiles.push_back(rom);
+        }
+    }
+
+    return rom_profiles;
 }
 
 }

@@ -10,6 +10,8 @@ namespace emufront {
 
 std::optional<std::vector<SystemProfile>> parse_systems(std::string ini_path);
 
+std::vector<RomProfile> read_roms(const std::vector<SystemProfile>& systems);
+
 }
 
 #endif
