@@ -16,5 +16,8 @@ build/%.o: src/%.cpp
 
 -include $(OBJ:.o=.d)
 
+run:
+	./$(TARGET)
+
 clean:
 	rm -rf build $(TARGET)

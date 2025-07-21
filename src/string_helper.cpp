@@ -1,6 +1,7 @@
 #include "string_helper.h"
 
 #include <cstddef>
+#include <sstream>
 #include <string>
 
 namespace emufront {
@@ -13,6 +14,18 @@ std::string replace_all(std::string str, const std::string& from, const std::str
     }
 
     return str;
+}
+
+std::vector<std::string> split(const std::string& s, char delim) {
+    std::vector<std::string> elems;
+    std::stringstream ss(s);
+    std::string item;
+
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+
+    return elems;
 }
 
 std::vector<std::string> parse_shell_args(const std::string& full_arg_str) {
